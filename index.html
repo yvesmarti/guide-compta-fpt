@@ -59,6 +59,13 @@
   .hero h1{font-size:2.5rem;line-height:1.15;margin:.3em 0 .25em;color:var(--noir);}
   .hero .sub{font-size:1.15rem;color:var(--gris);max-width:640px;}
   .hero .maj{margin-top:14px;font-size:.8rem;color:#999;}
+  /* ---------- BOUTON TÉLÉCHARGEMENT ---------- */
+  .telecharger{display:inline-flex;align-items:center;gap:8px;margin-top:22px;
+    background:var(--rouge);color:#fff;text-decoration:none;font-weight:700;
+    font-size:.95rem;padding:12px 22px;border-radius:5px;transition:.15s;
+    box-shadow:0 2px 6px rgba(185,30,39,.25);}
+  .telecharger:hover{background:var(--rouge-fonce);box-shadow:0 4px 10px rgba(185,30,39,.35);}
+  .telecharger svg{width:18px;height:18px;fill:currentColor;flex:0 0 auto;}
   /* ---------- AVERTISSEMENT ---------- */
   .avert{background:var(--vert-clair);border-left:4px solid var(--vert);
     padding:16px 20px;margin:28px 0;font-size:.92rem;border-radius:0 4px 4px 0;}
@@ -275,6 +282,10 @@
     <h1>La comptabilité publique territoriale</h1>
     <div class="sub">Engagement, bon de commande, service fait, liquidation, mandatement, paiement : comprendre le circuit de l'argent une fois le marché signé.</div>
     <div class="maj">Cadre M57 (obligatoire depuis le 1ᵉʳ janvier 2024) · à jour juin 2026</div>
+    <a class="telecharger" href="guide-comptabilite-publique.pdf" download>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
+      Télécharger le guide en PDF
+    </a>
   </div>
 
   <div class="avert">
