@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guide de la comptabilité publique territoriale</title>
+<meta name="description" content="Guide pédagogique de la comptabilité publique territoriale : engagement, bon de commande, service fait, liquidation, mandatement, paiement. Comprendre la chaîne de la dépense (cadre M57) entre l'ordonnateur et le comptable public.">
+<meta name="theme-color" content="#B91E27">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Guide de la comptabilité publique territoriale">
+<meta property="og:description" content="Comprendre le circuit de l'argent public une fois le marché signé : engagement, bon de commande, service fait, liquidation, mandatement, paiement.">
+<meta name="twitter:card" content="summary">
 <style>
   :root{
     --rouge:#B91E27;
@@ -90,9 +97,11 @@
   .acteur .role{font-size:.82rem;color:var(--gris);margin-bottom:10px;font-style:italic;}
   .acteur ul{padding-left:1.1em;font-size:.9rem;}
   /* ---------- CHAINE / ÉTAPES ---------- */
-  .chaine{margin:24px 0;border-left:2px dashed var(--vert);padding-left:0;}
-  .etape{position:relative;padding:0 0 22px 56px;margin-left:18px;}
-  .etape::before{content:attr(data-n);position:absolute;left:-19px;top:0;
+  .chaine{position:relative;margin:24px 0;}
+  .chaine::before{content:"";position:absolute;left:17px;top:18px;bottom:18px;
+    border-left:2px dashed var(--vert);z-index:0;}
+  .etape{position:relative;padding:0 0 22px 56px;}
+  .etape::before{content:attr(data-n);position:absolute;left:0;top:0;z-index:1;
     width:36px;height:36px;background:var(--rouge);color:#fff;border-radius:50%;
     display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;}
   .etape h4{margin:4px 0 4px;color:var(--noir);font-size:1.12rem;}
@@ -121,6 +130,7 @@
     aside.open{transform:translateX(0);}
     main{margin:0 auto;padding:0 22px 80px;max-width:100%;}
     .hero h1{font-size:1.9rem;}
+    section h2{font-size:1.4rem;}
     .duo{grid-template-columns:1fr;}
     .menu-btn{display:flex;position:fixed;top:14px;right:14px;z-index:60;
       background:var(--rouge);color:#fff;border:none;border-radius:6px;
@@ -133,19 +143,109 @@
     main{margin:0;max-width:100%;}
     section{page-break-inside:avoid;}
     .hero{border-bottom:2px solid #000;}
+    .progress,.fab,.skip-link,.nav-search,.schema{display:none;}
   }
+  /* ---------- FOCUS VISIBLE (accessibilité clavier) ---------- */
+  a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{
+    outline:3px solid var(--vert);outline-offset:2px;border-radius:2px;}
+  nav a:focus-visible{outline-offset:-3px;}
+  .skip-link{position:absolute;left:8px;top:-60px;z-index:100;background:var(--rouge);
+    color:#fff;padding:10px 16px;border-radius:0 0 6px 6px;text-decoration:none;
+    font-weight:700;transition:top .15s;}
+  .skip-link:focus{top:0;}
+  main:focus{outline:none;}
+  /* ---------- BARRE DE PROGRESSION ---------- */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--rouge);
+    z-index:70;transition:width .1s linear;}
+  /* ---------- RECHERCHE ---------- */
+  .nav-search{padding:14px 24px 4px;}
+  .nav-search input{width:100%;padding:8px 10px;border:1px solid rgba(255,255,255,.2);
+    border-radius:5px;background:rgba(255,255,255,.06);color:#fff;font-size:.9rem;}
+  .nav-search input::placeholder{color:#9a9a9a;}
+  nav a.cache,nav .grp.cache{display:none;}
+  @keyframes flashbg{0%{box-shadow:inset 0 0 0 9999px rgba(185,30,39,.10);}
+    100%{box-shadow:inset 0 0 0 9999px rgba(185,30,39,0);}}
+  section.surligne{animation:flashbg 1.8s ease-out;border-radius:6px;}
+  /* ---------- BOUTONS FLOTTANTS ---------- */
+  .fab{position:fixed;right:18px;z-index:65;width:44px;height:44px;border-radius:50%;
+    border:none;cursor:pointer;background:var(--rouge);color:#fff;font-size:1.2rem;
+    box-shadow:0 2px 8px rgba(0,0,0,.25);display:flex;align-items:center;
+    justify-content:center;transition:opacity .2s,transform .2s;}
+  .fab:hover{transform:translateY(-2px);background:var(--rouge-fonce);}
+  #theme-btn{bottom:18px;}
+  #top-btn{bottom:74px;opacity:0;pointer-events:none;}
+  #top-btn.show{opacity:1;pointer-events:auto;}
+  /* ---------- ANCRES COPIABLES ---------- */
+  section h2 .anchor{font-size:1rem;color:var(--vert);text-decoration:none;opacity:0;
+    transition:opacity .15s;}
+  section h2:hover .anchor,section h2 .anchor:focus{opacity:1;}
+  .anchor.copie::after{content:" lien copié";font-size:.7rem;color:var(--gris);
+    text-transform:none;letter-spacing:0;}
+  /* ---------- SCHÉMA HORIZONTAL DE LA CHAÎNE ---------- */
+  .schema{margin:22px 0 8px;}
+  .schema-flow{display:flex;flex-wrap:wrap;gap:8px;}
+  .schema-step{flex:1 1 130px;min-width:120px;border:1px solid var(--bord);
+    border-radius:6px;padding:10px 12px;font-size:.82rem;color:var(--gris);}
+  .schema-step .n{display:inline-flex;width:22px;height:22px;border-radius:50%;
+    background:var(--rouge);color:#fff;align-items:center;justify-content:center;
+    font-weight:700;font-size:.78rem;margin-bottom:6px;}
+  .schema-step strong{display:block;font-size:.9rem;color:var(--noir);margin-bottom:2px;}
+  .schema-step.ord{background:#fbeced;}
+  .schema-step.cpt{background:#e8eef5;}
+  .schema-legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:10px;font-size:.78rem;
+    color:var(--gris);}
+  .schema-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .schema-legend i{width:14px;height:14px;border-radius:3px;display:inline-block;}
+  /* ---------- FAQ ---------- */
+  .faq details{border:1px solid var(--bord);border-radius:6px;margin:10px 0;
+    background:var(--gris-clair);overflow:hidden;}
+  .faq summary{cursor:pointer;padding:14px 42px 14px 18px;font-weight:600;
+    color:var(--noir);list-style:none;position:relative;}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{content:"+";position:absolute;right:18px;top:12px;
+    color:var(--rouge);font-weight:700;font-size:1.2rem;}
+  .faq details[open] summary::after{content:"\2013";}
+  .faq details[open] summary{border-bottom:1px solid var(--bord);}
+  .faq .reponse{padding:12px 18px;font-size:.95rem;}
+  .faq .reponse p{margin:.3em 0;}
+  /* ---------- LIENS / SOURCES ---------- */
+  ul.liens{list-style:none;padding-left:0;}
+  ul.liens li{margin:.5em 0;}
+  /* ---------- THÈME SOMBRE ---------- */
+  [data-theme="dark"]{
+    --rouge:#e36b72;--rouge-fonce:#ec888d;--vert:#c2ca9e;--vert-clair:#262a1d;
+    --noir:#e7e7e3;--gris:#aeaea7;--gris-clair:#222222;--bord:#3a3a38;--blanc:#171717;
+  }
+  [data-theme="dark"] aside{background:#0d0d0d;}
+  [data-theme="dark"] th{background:#2c2c2c;color:#fff;}
+  [data-theme="dark"] .def{background:#152330;}
+  [data-theme="dark"] .def .lbl{color:#79aadd;}
+  [data-theme="dark"] .warn{background:#2c1f12;}
+  [data-theme="dark"] .warn .lbl{color:#e2a063;}
+  [data-theme="dark"] .ex{background:#2c1417;}
+  [data-theme="dark"] .qui.ord{background:#3a1e21;color:#eaa6ab;}
+  [data-theme="dark"] .qui.cpt{background:#1e2a38;color:#9cc0e6;}
+  [data-theme="dark"] .schema-step.ord{background:#33191c;}
+  [data-theme="dark"] .schema-step.cpt{background:#1a2733;}
+  [data-theme="dark"] code{background:#2a2a2a;padding:1px 5px;border-radius:3px;}
 </style>
 </head>
 <body>
 
-<button class="menu-btn" onclick="document.querySelector('aside').classList.toggle('open')">☰ Sommaire</button>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<div class="progress" id="progress"></div>
+
+<button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">☰ Sommaire</button>
 
 <aside>
   <div class="brand">
     <div class="sigle">Comptabilité <b>publique</b></div>
     <div class="sous">guide territorial</div>
   </div>
-  <nav id="nav">
+  <div class="nav-search">
+    <input type="search" id="recherche" placeholder="Rechercher dans le guide…" aria-label="Rechercher dans le guide">
+  </div>
+  <nav id="nav" aria-label="Sommaire du guide">
     <div class="grp">Comprendre</div>
     <a href="#intro">1. Pourquoi c'est différent du privé</a>
     <a href="#acteurs">2. Les deux acteurs</a>
@@ -163,11 +263,13 @@
     <a href="#bergerlevrault">12. Où ça se passe dans Berger-Levrault</a>
     <a href="#delais">13. Délais de paiement &amp; intérêts</a>
     <a href="#erreurs">14. Erreurs fréquentes</a>
-    <a href="#glossaire">15. Glossaire des sigles</a>
+    <a href="#faq">15. Questions fréquentes</a>
+    <a href="#glossaire">16. Glossaire des sigles</a>
+    <a href="#sources">17. Sources &amp; liens utiles</a>
   </nav>
 </aside>
 
-<main>
+<main id="contenu" tabindex="-1">
   <div class="hero">
     <div class="eyebrow">Guide pédagogique · Service déchets</div>
     <h1>La comptabilité publique territoriale</h1>
@@ -281,6 +383,21 @@
   <section id="chaine">
     <h2><span class="num">4</span> La chaîne de la dépense : vue d'ensemble</h2>
     <p>Une dépense publique suit toujours le même circuit. Les <strong>étapes 1 à 4 sont côté collectivité</strong> (l'ordonnateur), les <strong>étapes 5 à 6 sont côté Trésor</strong> (le comptable). Voici la photo d'ensemble ; chaque étape est détaillée juste après.</p>
+
+    <div class="schema" aria-hidden="true">
+      <div class="schema-flow">
+        <div class="schema-step ord"><span class="n">1</span><strong>Engagement</strong>Réserver les crédits</div>
+        <div class="schema-step ord"><span class="n">2</span><strong>Bon de commande</strong>Commander au fournisseur</div>
+        <div class="schema-step ord"><span class="n">3</span><strong>Service fait</strong>Constater la livraison</div>
+        <div class="schema-step ord"><span class="n">4</span><strong>Liquidation + mandat</strong>Arrêter le montant, ordonner le paiement</div>
+        <div class="schema-step cpt"><span class="n">5</span><strong>Contrôle</strong>Vérifier la régularité</div>
+        <div class="schema-step cpt"><span class="n">6</span><strong>Paiement</strong>Verser l'argent</div>
+      </div>
+      <div class="schema-legend">
+        <span><i style="background:#fbeced;border:1px solid #e0b4b8"></i> Étapes 1 à 4 — collectivité (ordonnateur)</span>
+        <span><i style="background:#e8eef5;border:1px solid #b4c4d8"></i> Étapes 5 à 6 — Trésor (comptable)</span>
+      </div>
+    </div>
 
     <div class="chaine">
       <div class="etape" data-n="1">
@@ -541,9 +658,45 @@
     </div>
   </section>
 
-  <!-- ============ 15. GLOSSAIRE ============ -->
+  <!-- ============ 15. FAQ ============ -->
+  <section id="faq">
+    <h2><span class="num">15</span> Questions fréquentes</h2>
+    <p>Les réponses ci-dessous reprennent et résument le contenu du guide. En cas de doute sur un cas réel, le service finances et le comptable public font foi.</p>
+    <div class="faq">
+      <details>
+        <summary>Peut-on payer une facture avant la livraison&nbsp;?</summary>
+        <div class="reponse"><p>Non. La règle d'or est <strong>« pas de paiement sans service fait »</strong> : l'argent ne sort qu'une fois la fourniture réellement livrée ou la prestation réalisée et constatée. Les seules exceptions sont les avances ou acomptes expressément prévus au marché.</p></div>
+      </details>
+      <details>
+        <summary>Faut-il engager les crédits avant ou après la commande&nbsp;?</summary>
+        <div class="reponse"><p><strong>Avant.</strong> L'engagement comptable (réserver les crédits) doit précéder l'engagement juridique (commander). Commander d'abord puis chercher les crédits est la faute classique&nbsp;: le comptable peut bloquer.</p></div>
+      </details>
+      <details>
+        <summary>Que se passe-t-il si le comptable rejette le mandat&nbsp;?</summary>
+        <div class="reponse"><p>Si une pièce manque ou qu'un calcul cloche, le comptable <strong>rejette</strong> le mandat&nbsp;: il revient à la collectivité pour correction. Chaque rejet fait perdre du temps et « mange » le délai de paiement, avec un risque d'intérêts moratoires. D'où l'intérêt de transmettre un dossier complet dès le départ&nbsp;: facture, bon de commande, référence du marché et preuve de service fait.</p></div>
+      </details>
+      <details>
+        <summary>Mon achat est-il du fonctionnement ou de l'investissement&nbsp;?</summary>
+        <div class="reponse"><p>Un bien durable qui entre dans le patrimoine (colonnes, PAV, achat de bacs en masse) est de <strong>l'investissement</strong> (souvent chapitre&nbsp;21). Une dépense courante et répétitive (collecte, carburant, entretien) est du <strong>fonctionnement</strong>. En cas de doute, le service finances indique la bonne imputation.</p></div>
+      </details>
+      <details>
+        <summary>Dans quel délai un fournisseur doit-il être payé&nbsp;?</summary>
+        <div class="reponse"><p>Le <strong>délai global de paiement (DGP) est de 30&nbsp;jours</strong> pour les collectivités, à compter de la réception de la facture (ou du service fait s'il est postérieur) jusqu'au paiement effectif. Au-delà, le fournisseur a droit de plein droit à des intérêts moratoires et à une indemnité forfaitaire.</p></div>
+      </details>
+      <details>
+        <summary>Comment calculer la TVA quand il y a une écocontribution (REP)&nbsp;?</summary>
+        <div class="reponse"><p>L'écocontribution s'ajoute au prix HT <em>avant</em> d'appliquer la TVA&nbsp;: <code>TTC = (HT + écocontribution HT) × (1 + TVA)</code>. L'oublier fausse la liquidation, donc tout le mandat.</p></div>
+      </details>
+      <details>
+        <summary>Le comptable peut-il refuser parce qu'il juge l'achat inutile&nbsp;?</summary>
+        <div class="reponse"><p>Non. Le comptable contrôle la <strong>régularité</strong> (pièces, crédits, calcul, imputation), jamais <strong>l'opportunité</strong> de la dépense. Il ne juge pas vos choix&nbsp;; il bloque seulement si un justificatif manque ou si une règle de forme n'est pas respectée.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ 16. GLOSSAIRE ============ -->
   <section id="glossaire">
-    <h2><span class="num">15</span> Glossaire des sigles</h2>
+    <h2><span class="num">16</span> Glossaire des sigles</h2>
     <dl class="gloss">
       <dt>Ordonnateur</dt><dd>Celui qui décide et ordonne la dépense (côté collectivité). Ne manie pas l'argent.</dd>
       <dt>Comptable public</dt><dd>Agent de la DGFiP qui contrôle et paie. Ne juge pas l'opportunité.</dd>
@@ -567,6 +720,32 @@
     </dl>
   </section>
 
+  <!-- ============ 17. SOURCES ============ -->
+  <section id="sources">
+    <h2><span class="num">17</span> Sources &amp; liens utiles</h2>
+    <p>Pour aller plus loin que cette vulgarisation, voici les références et portails officiels qui font autorité.</p>
+
+    <h3>Textes de référence</h3>
+    <ul>
+      <li>Décret n°&nbsp;2012-1246 du 7 novembre 2012 relatif à la <strong>gestion budgétaire et comptable publique (GBCP)</strong> — pose la séparation ordonnateur / comptable.</li>
+      <li><strong>Code général des collectivités territoriales (CGCT)</strong> — règles applicables aux dépenses et recettes des collectivités.</li>
+      <li><strong>Nomenclature M57</strong> — référentiel budgétaire et comptable obligatoire depuis le 1ᵉʳ&nbsp;janvier 2024.</li>
+      <li>Réglementation sur les <strong>délais de paiement</strong> dans la commande publique (délai global de paiement et intérêts moratoires).</li>
+    </ul>
+
+    <h3>Portails officiels</h3>
+    <ul class="liens">
+      <li><a class="lien" href="https://www.collectivites-locales.gouv.fr" target="_blank" rel="noopener">collectivites-locales.gouv.fr</a> — portail de l'État sur les finances et la gestion locales.</li>
+      <li><a class="lien" href="https://www.legifrance.gouv.fr" target="_blank" rel="noopener">legifrance.gouv.fr</a> — textes officiels (décrets, codes).</li>
+      <li><a class="lien" href="https://www.economie.gouv.fr/dgfip" target="_blank" rel="noopener">economie.gouv.fr/dgfip</a> — Direction Générale des Finances Publiques.</li>
+    </ul>
+
+    <div class="callout warn">
+      <span class="lbl">À vérifier</span>
+      <p>Les liens ci-dessus pointent vers les portails racines&nbsp;: vérifiez la version en vigueur des textes et complétez avec les ressources internes de votre collectivité (service finances, documentation Berger-Levrault).</p>
+    </div>
+  </section>
+
   <footer>
     Guide pédagogique · comptabilité publique territoriale · à jour juin 2026.<br>
     Document de vulgarisation : en cas de doute, le service finances de la collectivité et le comptable public font foi.
@@ -574,20 +753,108 @@
 
 </main>
 
+<button class="fab" id="top-btn" aria-label="Revenir en haut de la page" title="Revenir en haut">↑</button>
+<button class="fab" id="theme-btn" aria-label="Changer de thème">🌙</button>
+
 <script>
-  // Surlignage de la section active dans le menu
-  const liens = document.querySelectorAll('#nav a');
-  const sections = [...liens].map(a => document.querySelector(a.getAttribute('href')));
+  const liens = [...document.querySelectorAll('#nav a')];
+  const sections = liens.map(a => document.querySelector(a.getAttribute('href')));
+  const aside = document.querySelector('aside');
+  const menuBtn = document.getElementById('menu-btn');
+
+  // Surlignage + aria-current de la section active dans le menu
   function maj(){
     let i = sections.length;
     while(--i >= 0 && sections[i] && window.scrollY + 120 < sections[i].offsetTop){}
-    liens.forEach(l => l.classList.remove('actif'));
-    if(i >= 0 && liens[i]) liens[i].classList.add('actif');
+    liens.forEach(l => { l.classList.remove('actif'); l.removeAttribute('aria-current'); });
+    if(i >= 0 && liens[i]){ liens[i].classList.add('actif'); liens[i].setAttribute('aria-current','true'); }
   }
-  window.addEventListener('scroll', maj); maj();
-  // Fermer le menu mobile au clic
-  liens.forEach(l => l.addEventListener('click', () =>
-    document.querySelector('aside').classList.remove('open')));
+
+  // Barre de progression + bouton retour en haut
+  const progress = document.getElementById('progress');
+  const topBtn = document.getElementById('top-btn');
+  function onScroll(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', h.scrollTop > 400);
+  }
+  topBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  window.addEventListener('scroll', () => { maj(); onScroll(); });
+  maj(); onScroll();
+
+  // Menu mobile accessible
+  menuBtn.addEventListener('click', () => {
+    const open = aside.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  liens.forEach(l => l.addEventListener('click', () => {
+    aside.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Recherche / filtre du sommaire
+  const recherche = document.getElementById('recherche');
+  recherche.addEventListener('input', () => {
+    const q = recherche.value.trim().toLowerCase();
+    liens.forEach((a, i) => {
+      const txt = (a.textContent + ' ' + (sections[i] ? sections[i].textContent : '')).toLowerCase();
+      a.classList.toggle('cache', q !== '' && !txt.includes(q));
+    });
+    document.querySelectorAll('#nav .grp').forEach(g => {
+      let el = g.nextElementSibling, visible = false;
+      while(el && !el.classList.contains('grp')){
+        if(el.tagName === 'A' && !el.classList.contains('cache')) visible = true;
+        el = el.nextElementSibling;
+      }
+      g.classList.toggle('cache', q !== '' && !visible);
+    });
+  });
+
+  // Ancres copiables sur chaque titre de section
+  document.querySelectorAll('main section[id]').forEach(sec => {
+    const h2 = sec.querySelector('h2');
+    if(!h2) return;
+    const a = document.createElement('a');
+    a.className = 'anchor';
+    a.href = '#' + sec.id;
+    a.textContent = '#';
+    a.setAttribute('aria-label', 'Copier le lien vers cette section');
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      history.replaceState(null, '', '#' + sec.id);
+      const url = location.href;
+      if(navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {});
+      a.classList.add('copie');
+      setTimeout(() => a.classList.remove('copie'), 1300);
+      sec.classList.remove('surligne'); void sec.offsetWidth; sec.classList.add('surligne');
+    });
+    h2.appendChild(a);
+  });
+
+  // Thème sombre (préférence mémorisée)
+  const themeBtn = document.getElementById('theme-btn');
+  const root = document.documentElement;
+  function setTheme(t){
+    if(t === 'dark'){
+      root.setAttribute('data-theme', 'dark');
+      themeBtn.textContent = '☀';
+      themeBtn.setAttribute('aria-label', 'Activer le thème clair');
+    } else {
+      root.removeAttribute('data-theme');
+      themeBtn.textContent = '🌙';
+      themeBtn.setAttribute('aria-label', 'Activer le thème sombre');
+    }
+  }
+  const stored = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(stored || (prefersDark ? 'dark' : 'light'));
+  themeBtn.addEventListener('click', () => {
+    const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', t);
+    setTheme(t);
+  });
 </script>
 </body>
 </html>
