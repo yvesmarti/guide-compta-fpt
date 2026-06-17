@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide de la comptabilité publique territoriale</title>
+<style>
+  :root{
+    --rouge:#B91E27;
+    --rouge-fonce:#8f1620;
+    --vert:#B1B993;
+    --vert-clair:#eef0e6;
+    --noir:#1a1a1a;
+    --gris:#5a5a5a;
+    --gris-clair:#f5f5f3;
+    --bord:#e2e2dc;
+    --blanc:#ffffff;
+    --sidebar:300px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    padding-left:var(--sidebar);
+    font-family:"Calibri","Segoe UI",system-ui,-apple-system,sans-serif;
+    color:var(--noir);
+    background:var(--blanc);
+    line-height:1.6;
+    font-size:16px;
+  }
+  /* ---------- SIDEBAR ---------- */
+  aside{
+    position:fixed;top:0;left:0;width:var(--sidebar);height:100vh;
+    background:var(--noir);color:#fff;overflow-y:auto;padding:28px 0 40px;
+  }
+  aside .brand{padding:0 24px 18px;border-bottom:1px solid rgba(255,255,255,.15);}
+  aside .brand .sigle{font-size:1.35rem;font-weight:700;letter-spacing:.5px;}
+  aside .brand .sigle b{color:var(--vert);}
+  aside .brand .sous{font-size:.78rem;color:#b9b9b9;margin-top:2px;}
+  nav{margin-top:14px;}
+  nav .grp{padding:16px 24px 6px;font-size:.72rem;text-transform:uppercase;
+    letter-spacing:1.2px;color:var(--vert);font-weight:700;}
+  nav a{display:block;padding:7px 24px 7px 24px;color:#dcdcdc;text-decoration:none;
+    font-size:.92rem;border-left:3px solid transparent;transition:.15s;}
+  nav a:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:var(--vert);}
+  nav a.actif{background:rgba(185,30,39,.25);color:#fff;border-left-color:var(--rouge);}
+  /* ---------- MAIN ---------- */
+  main{margin:0 auto;max-width:880px;padding:0 56px 100px;}
+  .hero{padding:64px 0 28px;border-bottom:4px solid var(--rouge);}
+  .hero .eyebrow{color:var(--rouge);font-weight:700;text-transform:uppercase;
+    letter-spacing:1.5px;font-size:.8rem;}
+  .hero h1{font-size:2.5rem;line-height:1.15;margin:.3em 0 .25em;color:var(--noir);}
+  .hero .sub{font-size:1.15rem;color:var(--gris);max-width:640px;}
+  .hero .maj{margin-top:14px;font-size:.8rem;color:#999;}
+  /* ---------- AVERTISSEMENT ---------- */
+  .avert{background:var(--vert-clair);border-left:4px solid var(--vert);
+    padding:16px 20px;margin:28px 0;font-size:.92rem;border-radius:0 4px 4px 0;}
+  /* ---------- SECTIONS ---------- */
+  section{padding-top:48px;}
+  section h2{font-size:1.7rem;color:var(--rouge);margin:0 0 .2em;
+    display:flex;align-items:baseline;gap:12px;}
+  section h2 .num{font-size:1rem;color:var(--vert);font-weight:700;
+    border:2px solid var(--vert);border-radius:50%;width:32px;height:32px;
+    display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  section h3{font-size:1.18rem;color:var(--noir);margin:1.5em 0 .4em;}
+  p{margin:.6em 0;}
+  strong{color:var(--noir);}
+  em{color:var(--rouge-fonce);font-style:normal;font-weight:600;}
+  ul,ol{margin:.6em 0;padding-left:1.4em;}
+  li{margin:.35em 0;}
+  a.lien{color:var(--rouge);text-decoration:underline;}
+  /* ---------- CALLOUTS ---------- */
+  .callout{padding:14px 18px;margin:18px 0;border-radius:4px;font-size:.95rem;}
+  .callout .lbl{display:block;font-size:.72rem;text-transform:uppercase;
+    letter-spacing:1px;font-weight:700;margin-bottom:5px;}
+  .callout p{margin:.3em 0;}
+  .def{background:#f2f6fb;border-left:4px solid #3a6ea5;}
+  .def .lbl{color:#3a6ea5;}
+  .tip{background:var(--vert-clair);border-left:4px solid var(--vert);}
+  .tip .lbl{color:#6b7340;}
+  .warn{background:#fdf0e7;border-left:4px solid #d97b30;}
+  .warn .lbl{color:#c25e15;}
+  .ex{background:#fbeced;border-left:4px solid var(--rouge);}
+  .ex .lbl{color:var(--rouge);}
+  /* ---------- 2 ACTEURS CARDS ---------- */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0;}
+  .acteur{border:1px solid var(--bord);border-radius:6px;padding:18px 20px;
+    background:var(--gris-clair);}
+  .acteur h4{margin:0 0 4px;color:var(--rouge);font-size:1.05rem;}
+  .acteur .role{font-size:.82rem;color:var(--gris);margin-bottom:10px;font-style:italic;}
+  .acteur ul{padding-left:1.1em;font-size:.9rem;}
+  /* ---------- CHAINE / ÉTAPES ---------- */
+  .chaine{margin:24px 0;border-left:2px dashed var(--vert);padding-left:0;}
+  .etape{position:relative;padding:0 0 22px 56px;margin-left:18px;}
+  .etape::before{content:attr(data-n);position:absolute;left:-19px;top:0;
+    width:36px;height:36px;background:var(--rouge);color:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;}
+  .etape h4{margin:4px 0 4px;color:var(--noir);font-size:1.12rem;}
+  .etape .qui{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.5px;padding:2px 8px;border-radius:3px;margin-bottom:6px;}
+  .qui.ord{background:#fbeced;color:var(--rouge);}
+  .qui.cpt{background:#e8eef5;color:#3a6ea5;}
+  .etape p{font-size:.93rem;margin:.3em 0;}
+  /* ---------- TABLE ---------- */
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.9rem;}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--bord);vertical-align:top;}
+  th{background:var(--noir);color:#fff;font-weight:600;}
+  tr:nth-child(even) td{background:var(--gris-clair);}
+  /* ---------- GLOSSAIRE ---------- */
+  dl.gloss{margin:18px 0;}
+  dl.gloss dt{font-weight:700;color:var(--rouge);margin-top:12px;}
+  dl.gloss dd{margin:2px 0 0;font-size:.93rem;color:var(--gris);}
+  /* ---------- FOOTER ---------- */
+  footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--bord);
+    font-size:.82rem;color:#999;}
+  /* ---------- MOBILE ---------- */
+  .menu-btn{display:none;}
+  @media(max-width:900px){
+    body{padding-left:0;}
+    aside{transform:translateX(-100%);transition:.25s;z-index:50;width:280px;}
+    aside.open{transform:translateX(0);}
+    main{margin:0 auto;padding:0 22px 80px;max-width:100%;}
+    .hero h1{font-size:1.9rem;}
+    .duo{grid-template-columns:1fr;}
+    .menu-btn{display:flex;position:fixed;top:14px;right:14px;z-index:60;
+      background:var(--rouge);color:#fff;border:none;border-radius:6px;
+      padding:10px 14px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  }
+  /* ---------- PRINT ---------- */
+  @media print{
+    body{padding-left:0;}
+    aside,.menu-btn{display:none;}
+    main{margin:0;max-width:100%;}
+    section{page-break-inside:avoid;}
+    .hero{border-bottom:2px solid #000;}
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.querySelector('aside').classList.toggle('open')">☰ Sommaire</button>
+
+<aside>
+  <div class="brand">
+    <div class="sigle">Comptabilité <b>publique</b></div>
+    <div class="sous">guide territorial</div>
+  </div>
+  <nav id="nav">
+    <div class="grp">Comprendre</div>
+    <a href="#intro">1. Pourquoi c'est différent du privé</a>
+    <a href="#acteurs">2. Les deux acteurs</a>
+    <a href="#budget">3. Le budget : votre autorisation de dépenser</a>
+    <div class="grp">La chaîne de la dépense</div>
+    <a href="#chaine">4. Les 6 étapes, vue d'ensemble</a>
+    <a href="#engagement">5. L'engagement</a>
+    <a href="#commande">6. Le bon de commande</a>
+    <a href="#servicefait">7. Le service fait</a>
+    <a href="#liquidation">8. La liquidation</a>
+    <a href="#mandatement">9. Le mandatement</a>
+    <a href="#tresor">10. Le Trésor public : contrôle &amp; paiement</a>
+    <div class="grp">En pratique</div>
+    <a href="#filrouge">11. Cas pratique : des colonnes de A à Z</a>
+    <a href="#bergerlevrault">12. Où ça se passe dans Berger-Levrault</a>
+    <a href="#delais">13. Délais de paiement &amp; intérêts</a>
+    <a href="#erreurs">14. Erreurs fréquentes</a>
+    <a href="#glossaire">15. Glossaire des sigles</a>
+  </nav>
+</aside>
+
+<main>
+  <div class="hero">
+    <div class="eyebrow">Guide pédagogique · Service déchets</div>
+    <h1>La comptabilité publique territoriale</h1>
+    <div class="sub">Engagement, bon de commande, service fait, liquidation, mandatement, paiement : comprendre le circuit de l'argent une fois le marché signé.</div>
+    <div class="maj">Cadre M57 (obligatoire depuis le 1ᵉʳ janvier 2024) · à jour juin 2026</div>
+  </div>
+
+  <div class="avert">
+    <strong>Avertissement.</strong> Ce guide vulgarise. Il ne remplace ni le service finances de la collectivité, ni le comptable public. Avant toute opération réelle, faites valider vos écritures par le service comptable de la collectivité.
+  </div>
+
+  <!-- ============ 1. INTRO ============ -->
+  <section id="intro">
+    <h2><span class="num">1</span> Pourquoi ce n'est pas comme dans le privé</h2>
+    <p>Dans une entreprise, celui qui décide d'acheter peut aussi signer le chèque. Dans une collectivité, <em>c'est interdit</em>. Les deux gestes sont séparés entre deux personnes différentes qui ne dépendent pas l'une de l'autre.</p>
+
+    <div class="callout def">
+      <span class="lbl">Le principe fondateur</span>
+      <p><strong>Séparation de l'ordonnateur et du comptable.</strong> Celui qui <em>décide la dépense</em> (l'ordonnateur, côté collectivité) n'est jamais celui qui <em>manie l'argent</em> (le comptable public, côté Trésor). C'est un garde-fou contre la fraude : il faut deux acteurs indépendants pour que de l'argent public sorte.</p>
+    </div>
+
+    <p>Conséquence directe : payer une facture n'est jamais « un clic ». C'est une <strong>chaîne d'étapes</strong>, chacune tracée et justifiée, qui passe la main de la collectivité au Trésor. Tout ce guide décrit cette chaîne.</p>
+
+    <h3>L'autre réflexe à acquérir : fonctionnement ou investissement ?</h3>
+    <p>Chaque dépense tombe dans l'une de deux « sections » du budget. Le réflexe à prendre dès qu'on engage une dépense :</p>
+    <table>
+      <tr><th>Section</th><th>C'est quoi</th><th>Exemples côté déchets</th></tr>
+      <tr><td><strong>Fonctionnement</strong></td><td>Dépenses courantes, répétitives, qui « disparaissent » à l'usage</td><td>Prestation de collecte, carburant, entretien des bacs, communication</td></tr>
+      <tr><td><strong>Investissement</strong></td><td>Achat d'un bien durable qui entre dans le patrimoine</td><td>Colonnes enterrées, PAV, cabanes à cartons, achat de bacs en masse</td></tr>
+    </table>
+    <div class="callout tip">
+      <span class="lbl">Pourquoi ça compte pour vous</span>
+      <p>Vos déploiements d'équipements (colonnes, PAV) sont presque toujours de <em>l'investissement</em>. Les crédits ne sont pas pris sur la même ligne que les prestations courantes, et un investissement peut s'étaler sur plusieurs années (voir AP/CP, section&nbsp;3).</p>
+    </div>
+  </section>
+
+  <!-- ============ 2. ACTEURS ============ -->
+  <section id="acteurs">
+    <h2><span class="num">2</span> Les deux acteurs de toute dépense</h2>
+    <p>Retenez ces deux rôles : tout le reste en découle.</p>
+
+    <div class="duo">
+      <div class="acteur">
+        <h4>L'ordonnateur</h4>
+        <div class="role">Côté collectivité — le Président, et par délégation les services</div>
+        <ul>
+          <li><strong>Décide</strong> la dépense</li>
+          <li><strong>Engage</strong> les crédits</li>
+          <li><strong>Constate</strong> que la prestation est faite</li>
+          <li><strong>Ordonne</strong> le paiement (émet le mandat)</li>
+          <li>Ne touche <em>jamais</em> à l'argent</li>
+        </ul>
+      </div>
+      <div class="acteur">
+        <h4>Le comptable public</h4>
+        <div class="role">Côté État — la DGFiP (ex-« Trésor public »)</div>
+        <ul>
+          <li><strong>Contrôle</strong> la régularité du mandat</li>
+          <li><strong>Paie</strong> effectivement le fournisseur</li>
+          <li><strong>Tient</strong> la caisse et les comptes</li>
+          <li>Peut <em>refuser</em> de payer si une pièce manque</li>
+          <li>Ne juge jamais l'<em>opportunité</em> de la dépense</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout def">
+      <span class="lbl">« Trésor public », un mot qui a changé de nom</span>
+      <p>L'ancien réseau du Trésor public fait aujourd'hui partie de la <strong>DGFiP</strong> (Direction Générale des Finances Publiques). Votre interlocuteur local est un <strong>SGC</strong> (Service de Gestion Comptable), qui a remplacé les anciennes « trésoreries ». Dans le langage courant, on dit encore « le Trésor » ou « le comptable » : c'est la même chose.</p>
+    </div>
+
+    <div class="callout warn">
+      <span class="lbl">Important</span>
+      <p>Le comptable contrôle la <em>forme</em> (les bonnes pièces sont-elles là ? les crédits existent-ils ? le calcul est-il juste ?), pas le <em>fond</em> (était-ce une bonne idée d'acheter ?). Il n'a pas à juger vos choix — mais il bloquera un paiement si un justificatif manque.</p>
+    </div>
+  </section>
+
+  <!-- ============ 3. BUDGET ============ -->
+  <section id="budget">
+    <h2><span class="num">3</span> Le budget : votre autorisation de dépenser</h2>
+    <p>Avant de dépenser un euro, il faut que cet euro ait été <em>prévu</em>. Le budget voté par les élus n'est pas une simple prévision : c'est une <strong>autorisation</strong>. On parle de <strong>crédits</strong> — le « droit de dépenser » jusqu'à un certain montant, sur une certaine ligne.</p>
+
+    <div class="callout def">
+      <span class="lbl">Image simple</span>
+      <p>Le crédit budgétaire, c'est comme le plafond d'une carte bancaire fixé à l'avance par les élus. Tant qu'il reste du plafond sur la bonne ligne, vous pouvez engager. Une fois le plafond atteint, plus rien ne passe sans une décision modificative.</p>
+    </div>
+
+    <h3>Comment les crédits sont rangés</h3>
+    <p>Les crédits sont classés par <strong>chapitre</strong> puis <strong>article</strong> (un numéro de compte). C'est la <strong>nomenclature M57</strong>, obligatoire pour toutes les collectivités depuis le 1ᵉʳ janvier 2024 (elle a remplacé l'ancienne M14).</p>
+    <ul>
+      <li>Une colonne enterrée s'impute en investissement, chapitre 21 (immobilisations corporelles).</li>
+      <li>Une prestation de collecte s'impute en fonctionnement, chapitre 011 (charges à caractère général).</li>
+    </ul>
+    <p>Vous n'avez pas à connaître tous les comptes par cœur : le service finances vous indique la bonne imputation. Mais savoir <em>qu'elle existe</em> évite bien des allers-retours.</p>
+
+    <div class="callout tip">
+      <span class="lbl">Où loge le service déchets ?</span>
+      <p>Selon son financement, le service déchets est soit dans le <strong>budget principal</strong> (financé par la TEOM, en M57), soit dans un <strong>budget annexe</strong> de type SPIC (financé par une redevance, en nomenclature M4). La chaîne de la dépense décrite ici est <em>identique</em> dans les deux cas — seule l'imputation change. Demandez au service finances dans quel budget vivent vos équipements.</p>
+    </div>
+
+    <h3>Quand une dépense s'étale sur plusieurs années : les AP/CP</h3>
+    <p>Vos déploiements durent souvent plus d'un an. Le mécanisme <strong>AP/CP</strong> sert exactement à ça :</p>
+    <ul>
+      <li><strong>AP — Autorisation de Programme</strong> : l'enveloppe totale votée pour l'opération (ex. 600&nbsp;000&nbsp;€ pour 3 ans de déploiement de colonnes).</li>
+      <li><strong>CP — Crédits de Paiement</strong> : ce qu'on prévoit de réellement payer chaque année (ex. 200&nbsp;000&nbsp;€ en N, 250&nbsp;000&nbsp;€ en N+1…).</li>
+    </ul>
+    <p>Ça évite de devoir tout inscrire la même année et donne de la visibilité pluriannuelle. C'est très adapté à un programme d'équipement comme le vôtre.</p>
+  </section>
+
+  <!-- ============ 4. CHAINE VUE D'ENSEMBLE ============ -->
+  <section id="chaine">
+    <h2><span class="num">4</span> La chaîne de la dépense : vue d'ensemble</h2>
+    <p>Une dépense publique suit toujours le même circuit. Les <strong>étapes 1 à 4 sont côté collectivité</strong> (l'ordonnateur), les <strong>étapes 5 à 6 sont côté Trésor</strong> (le comptable). Voici la photo d'ensemble ; chaque étape est détaillée juste après.</p>
+
+    <div class="chaine">
+      <div class="etape" data-n="1">
+        <span class="qui ord">Collectivité · ordonnateur</span>
+        <h4>Engagement</h4>
+        <p>On réserve les crédits et on crée l'obligation de payer (le marché, le bon de commande).</p>
+      </div>
+      <div class="etape" data-n="2">
+        <span class="qui ord">Collectivité · ordonnateur</span>
+        <h4>Bon de commande</h4>
+        <p>On commande concrètement au fournisseur, dans le cadre du marché.</p>
+      </div>
+      <div class="etape" data-n="3">
+        <span class="qui ord">Collectivité · ordonnateur</span>
+        <h4>Service fait</h4>
+        <p>La fourniture est livrée / la prestation est réalisée. On le constate.</p>
+      </div>
+      <div class="etape" data-n="4">
+        <span class="qui ord">Collectivité · ordonnateur</span>
+        <h4>Liquidation puis mandatement</h4>
+        <p>On vérifie la facture, on arrête le montant exact, et on émet le <strong>mandat</strong> : l'ordre de payer.</p>
+      </div>
+      <div class="etape" data-n="5">
+        <span class="qui cpt">Trésor · comptable</span>
+        <h4>Contrôle &amp; prise en charge</h4>
+        <p>Le comptable vérifie la régularité du mandat et des pièces.</p>
+      </div>
+      <div class="etape" data-n="6">
+        <span class="qui cpt">Trésor · comptable</span>
+        <h4>Paiement</h4>
+        <p>Le comptable verse l'argent au fournisseur.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="lbl">La règle d'or à mémoriser</span>
+      <p><strong>Pas de paiement sans service fait.</strong> On ne paie jamais d'avance (sauf avances/acomptes expressément prévus au marché). L'argent ne sort qu'une fois la chose réellement livrée ou faite.</p>
+    </div>
+  </section>
+
+  <!-- ============ 5. ENGAGEMENT ============ -->
+  <section id="engagement">
+    <h2><span class="num">5</span> L'engagement</h2>
+    <p>S'engager, c'est <strong>réserver des crédits</strong> et se lier à un fournisseur. C'est la première étape, et il y en a en réalité deux facettes qui vont ensemble :</p>
+
+    <table>
+      <tr><th>Type</th><th>Ce que c'est</th><th>Exemple</th></tr>
+      <tr><td><strong>Engagement comptable</strong></td><td>On « met de côté » le montant sur la ligne budgétaire, pour ne pas le dépenser deux fois</td><td>Réserver 48&nbsp;000&nbsp;€ sur le chapitre 21 avant de commander</td></tr>
+      <tr><td><strong>Engagement juridique</strong></td><td>L'acte qui crée l'obligation de payer envers un tiers</td><td>La signature du marché, ou l'émission du bon de commande</td></tr>
+    </table>
+
+    <div class="callout warn">
+      <span class="lbl">L'ordre compte</span>
+      <p>L'engagement comptable doit <em>précéder</em> l'engagement juridique. Autrement dit : <strong>on réserve les crédits AVANT de commander</strong>. Commander d'abord et chercher les crédits ensuite, c'est la faute classique — et le comptable peut bloquer.</p>
+    </div>
+
+    <div class="callout ex">
+      <span class="lbl">Côté déchets</span>
+      <p>Vous voulez 6 colonnes enterrées SULO à 8&nbsp;000&nbsp;€ HT pièce. Avant tout, le service finances <em>engage</em> ~48&nbsp;000&nbsp;€ sur la ligne investissement. Ces crédits sont désormais « gelés » : personne ne pourra les utiliser pour autre chose.</p>
+    </div>
+  </section>
+
+  <!-- ============ 6. BON DE COMMANDE ============ -->
+  <section id="commande">
+    <h2><span class="num">6</span> Le bon de commande</h2>
+    <p>Le bon de commande est l'acte par lequel vous <strong>commandez concrètement</strong> au fournisseur, à l'intérieur d'un marché déjà signé. C'est lui qui fait le lien entre votre guide des marchés publics (l'amont) et la comptabilité (l'aval).</p>
+
+    <div class="callout def">
+      <span class="lbl">Le lien avec les marchés</span>
+      <p>Quand un marché est un <strong>accord-cadre à bons de commande</strong>, le marché fixe les prix et les conditions ; mais rien n'est commandé tant que vous n'émettez pas un bon de commande. Vous « tirez » sur le marché au fur et à mesure de vos besoins réels. Chaque bon de commande s'appuie sur un engagement (section&nbsp;5).</p>
+    </div>
+
+    <p>Un bon de commande mentionne au minimum : le fournisseur, le marché de rattachement, les quantités, les prix unitaires (issus du <strong>BPU</strong>), le total, et la ligne budgétaire engagée.</p>
+
+    <div class="callout ex">
+      <span class="lbl">Côté déchets</span>
+      <p>Votre marché de fourniture de colonnes est signé avec SULO. Pour équiper Merville-Franceville, vous émettez un bon de commande de 6 colonnes au prix du BPU. C'est ce document que SULO recevra et exécutera.</p>
+    </div>
+  </section>
+
+  <!-- ============ 7. SERVICE FAIT ============ -->
+  <section id="servicefait">
+    <h2><span class="num">7</span> Le service fait</h2>
+    <p>Le <strong>service fait</strong>, c'est le moment où vous <em>constatez</em> que la commande a bien été honorée : la marchandise est livrée et conforme, ou la prestation est terminée.</p>
+
+    <div class="callout def">
+      <span class="lbl">Pourquoi c'est central</span>
+      <p>C'est la pièce maîtresse de tout le système : <strong>aucun paiement ne peut avoir lieu sans service fait constaté.</strong> C'est ce qui protège l'argent public contre le paiement de prestations fictives ou non terminées.</p>
+    </div>
+
+    <p>La constatation s'appuie sur une <strong>preuve</strong> : bon de livraison signé, procès-verbal de réception, photos avant/après, attestation de conformité… Plus l'enjeu est important (travaux), plus la preuve est formalisée.</p>
+
+    <div class="callout ex">
+      <span class="lbl">Côté déchets</span>
+      <p>Les 6 colonnes sont livrées et posées. Vous (ou Jonathan sur le terrain) vérifiez qu'il y a bien 6 colonnes, conformes, en bon état. Vous signez le bon de livraison et prenez des photos. <em>Le service est fait</em> — le paiement devient possible.</p>
+    </div>
+  </section>
+
+  <!-- ============ 8. LIQUIDATION ============ -->
+  <section id="liquidation">
+    <h2><span class="num">8</span> La liquidation</h2>
+    <p>Liquider, c'est <strong>arrêter le montant exact à payer</strong>. L'opération combine deux vérifications :</p>
+    <ol>
+      <li><strong>Le service est-il fait ?</strong> (on reprend l'étape 7)</li>
+      <li><strong>Quel est le montant juste ?</strong> On confronte la facture du fournisseur au bon de commande et aux prix du marché.</li>
+    </ol>
+
+    <div class="callout warn">
+      <span class="lbl">Le piège du calcul</span>
+      <p>C'est ici qu'on vérifie le détail : quantités livrées = quantités facturées ? prix unitaires conformes au BPU&nbsp;? TVA correcte&nbsp;? Pour les matériaux soumis à <strong>écocontribution (REP)</strong>, rappel de votre BPU : l'écocontribution s'ajoute au prix HT <em>avant</em> d'appliquer la TVA — <code>TTC = (HT + écocontribution HT) × (1 + TVA)</code>. Une liquidation sur une base fausse fausse tout le mandat.</p>
+    </div>
+
+    <div class="callout ex">
+      <span class="lbl">Côté déchets</span>
+      <p>SULO facture 6 colonnes. Vous vérifiez : 6 livrées, 6 facturées ✓ ; prix conforme au marché ✓ ; TVA à 20&nbsp;% ✓. Montant arrêté : 48&nbsp;000&nbsp;€ HT + TVA. La liquidation est faite, le montant est « bon à payer ».</p>
+    </div>
+  </section>
+
+  <!-- ============ 9. MANDATEMENT ============ -->
+  <section id="mandatement">
+    <h2><span class="num">9</span> Le mandatement</h2>
+    <p>Le <strong>mandatement</strong> (on dit aussi ordonnancement) est le dernier geste de l'ordonnateur : il <strong>émet le mandat</strong>, c'est-à-dire l'<em>ordre donné au comptable de payer</em> le montant liquidé.</p>
+
+    <div class="callout def">
+      <span class="lbl">Mandat = ordre de payer</span>
+      <p>Le mandat n'est <em>pas</em> le paiement. C'est l'ordre. La collectivité dit au Trésor : « voici une dépense régulière, justifiée, liquidée — payez ce fournisseur ». Le mandat part au comptable accompagné de toutes les <strong>pièces justificatives</strong>.</p>
+    </div>
+
+    <h3>Les pièces qui accompagnent le mandat</h3>
+    <p>Sans elles, le comptable refuse. Pour notre exemple : la facture, le bon de commande, la référence du marché, et la preuve de service fait (bon de livraison signé). Le tout part désormais de façon <strong>dématérialisée</strong>.</p>
+
+    <div class="callout tip">
+      <span class="lbl">Le miroir : les recettes</span>
+      <p>Côté argent qui <em>rentre</em> (subvention, redevance…), le mécanisme symétrique du mandat s'appelle le <strong>titre de recette</strong> : l'ordre donné au comptable d'encaisser. Même logique de séparation ordonnateur/comptable.</p>
+    </div>
+  </section>
+
+  <!-- ============ 10. TRESOR ============ -->
+  <section id="tresor">
+    <h2><span class="num">10</span> Le Trésor public : contrôle &amp; paiement</h2>
+    <p>Le mandat arrive chez le comptable (DGFiP / SGC). Avant de payer, il effectue des <strong>contrôles de régularité</strong> — toujours sur la forme, jamais sur l'opportunité.</p>
+
+    <h3>Ce que le comptable vérifie</h3>
+    <ul>
+      <li>Les <strong>crédits</strong> existent et sont disponibles</li>
+      <li>Le <strong>service fait</strong> est justifié</li>
+      <li>Les <strong>pièces justificatives</strong> sont complètes et exactes</li>
+      <li>Le <strong>calcul</strong> de liquidation est juste</li>
+      <li>La dépense est imputée au bon <strong>compte</strong></li>
+      <li>La <strong>créance</strong> n'est pas prescrite et le créancier est le bon</li>
+    </ul>
+
+    <div class="callout warn">
+      <span class="lbl">Le « rejet »</span>
+      <p>Si une pièce manque ou qu'un calcul cloche, le comptable <strong>rejette</strong> le mandat : il revient à la collectivité pour correction. Chaque rejet = du temps perdu et un risque de dépasser le délai de paiement. D'où l'intérêt de soigner les pièces dès le départ.</p>
+    </div>
+
+    <p>Si tout est conforme, le comptable <strong>prend en charge</strong> le mandat puis <strong>paie</strong> le fournisseur. L'argent public est sorti — proprement, et à deux mains.</p>
+  </section>
+
+  <!-- ============ 11. FIL ROUGE ============ -->
+  <section id="filrouge">
+    <h2><span class="num">11</span> Cas pratique : des colonnes, de A à Z</h2>
+    <p>Reprenons tout le circuit sur un cas réel de votre quotidien : équiper une commune de 6 colonnes enterrées.</p>
+
+    <div class="chaine">
+      <div class="etape" data-n="0">
+        <span class="qui ord">En amont</span>
+        <h4>Le marché existe déjà</h4>
+        <p>Accord-cadre de fourniture signé avec SULO, prix au BPU. Crédits prévus au budget (chapitre 21, investissement).</p>
+      </div>
+      <div class="etape" data-n="1">
+        <span class="qui ord">Collectivité</span>
+        <h4>Engagement — 48 000 €</h4>
+        <p>Le service finances réserve les crédits sur la ligne investissement.</p>
+      </div>
+      <div class="etape" data-n="2">
+        <span class="qui ord">Collectivité</span>
+        <h4>Bon de commande</h4>
+        <p>Vous commandez 6 colonnes à SULO, dans le cadre du marché.</p>
+      </div>
+      <div class="etape" data-n="3">
+        <span class="qui ord">Collectivité</span>
+        <h4>Service fait</h4>
+        <p>Colonnes livrées et posées. Bon de livraison signé, photos prises.</p>
+      </div>
+      <div class="etape" data-n="4">
+        <span class="qui ord">Collectivité</span>
+        <h4>Liquidation</h4>
+        <p>Facture SULO vérifiée : quantités, prix BPU, TVA. Montant arrêté.</p>
+      </div>
+      <div class="etape" data-n="5">
+        <span class="qui ord">Collectivité</span>
+        <h4>Mandatement</h4>
+        <p>Émission du mandat + envoi des pièces au Trésor (dématérialisé).</p>
+      </div>
+      <div class="etape" data-n="6">
+        <span class="qui cpt">Trésor</span>
+        <h4>Contrôle &amp; paiement</h4>
+        <p>Contrôles OK → SULO est payé. Le délai global ne doit pas dépasser 30 jours.</p>
+      </div>
+    </div>
+    <p>Vous n'êtes pas l'auteur de chaque étape comptable (le service finances et le comptable en font une partie). Mais vous êtes au cœur des étapes <strong>2, 3 et 4</strong> : c'est vous qui commandez, qui constatez la livraison, et qui apportez les pièces. Votre rigueur sur ces trois points conditionne la rapidité du paiement.</p>
+  </section>
+
+  <!-- ============ 12. BERGER-LEVRAULT ============ -->
+  <section id="bergerlevrault">
+    <h2><span class="num">12</span> Où ça se passe dans Berger-Levrault</h2>
+    <p>La collectivité utilise la gamme finances de <strong>Berger-Levrault</strong> (selon la taille : <em>e.sedit GF</em> ou <em>BL.GF</em>). Le logiciel matérialise précisément la chaîne ci-dessus, sans ressaisie d'une étape à l'autre.</p>
+
+    <table>
+      <tr><th>Étape de la chaîne</th><th>Dans le logiciel</th></tr>
+      <tr><td>Engagement</td><td>Saisie d'un engagement qui réserve les crédits sur la ligne</td></tr>
+      <tr><td>Bon de commande</td><td>Édition du bon de commande rattaché à l'engagement et au marché</td></tr>
+      <tr><td>Service fait</td><td>Constatation du service fait (souvent sur réception de la facture)</td></tr>
+      <tr><td>Liquidation / mandat</td><td>Liquidation puis génération du mandat</td></tr>
+      <tr><td>Envoi au Trésor</td><td>Flux <strong>PES V2</strong> transmis au comptable</td></tr>
+    </table>
+
+    <div class="callout def">
+      <span class="lbl">Deux sigles à connaître</span>
+      <p><strong>PES V2</strong> (Protocole d'Échange Standard) : le « tuyau » dématérialisé par lequel mandats et pièces partent de la collectivité vers le comptable. <strong>Hélios</strong> : le logiciel du comptable public qui reçoit ce flux côté DGFiP. Concrètement : vous mandatez dans Berger-Levrault, ça part en PES V2, ça arrive dans Hélios.</p>
+    </div>
+    <p>La signature et la circulation des pièces passent par un <strong>parapheur électronique</strong> : c'est la version dématérialisée du parapheur papier où l'on faisait signer les responsables.</p>
+  </section>
+
+  <!-- ============ 13. DELAIS ============ -->
+  <section id="delais">
+    <h2><span class="num">13</span> Délais de paiement &amp; intérêts moratoires</h2>
+    <p>Une collectivité doit payer ses fournisseurs dans un <strong>délai global de paiement (DGP) de 30 jours</strong>. Ce délai court à compter de la réception de la facture (ou du service fait s'il est postérieur) jusqu'au paiement effectif par le comptable.</p>
+
+    <div class="callout def">
+      <span class="lbl">Comment se partagent les 30 jours</span>
+      <p>En pratique, le délai se répartit entre les deux acteurs : à l'ordonnateur (la collectivité) de liquider et mandater rapidement, au comptable de contrôler et payer. Tout rejet de mandat « mange » le délai.</p>
+    </div>
+
+    <div class="callout warn">
+      <span class="lbl">Si on dépasse</span>
+      <p>Au-delà de 30 jours, le fournisseur a droit de plein droit à des <strong>intérêts moratoires</strong> + une indemnité forfaitaire. C'est de l'argent public dépensé pour rien. La meilleure prévention&nbsp;: un dossier complet (pièces + service fait) dès l'émission du mandat.</p>
+    </div>
+  </section>
+
+  <!-- ============ 14. ERREURS ============ -->
+  <section id="erreurs">
+    <h2><span class="num">14</span> Erreurs fréquentes (et comment les éviter)</h2>
+    <table>
+      <tr><th>L'erreur</th><th>Le réflexe</th></tr>
+      <tr><td>Commander avant d'avoir engagé les crédits</td><td>Toujours : crédits réservés d'abord, commande ensuite</td></tr>
+      <tr><td>Demander le paiement sans preuve de service fait</td><td>Pas de bon de livraison / PV signé = pas de paiement</td></tr>
+      <tr><td>Facture qui ne colle pas au bon de commande</td><td>Vérifier quantités + prix BPU avant de transmettre</td></tr>
+      <tr><td>Oublier l'écocontribution dans la base de TVA</td><td><code>TTC = (HT + écocontrib. HT) × (1 + TVA)</code></td></tr>
+      <tr><td>Confondre fonctionnement et investissement</td><td>Un équipement durable = investissement (chap. 21)</td></tr>
+      <tr><td>Transmettre un mandat avec une pièce manquante</td><td>Risque de rejet → délai dépassé → intérêts</td></tr>
+    </table>
+    <div class="callout tip">
+      <span class="lbl">Votre rôle en une phrase</span>
+      <p>Vous n'avez pas à maîtriser toute la comptabilité — mais en livrant à temps un dossier propre (bon de commande juste, service fait prouvé, facture vérifiée), vous faites avancer toute la chaîne sans accroc.</p>
+    </div>
+  </section>
+
+  <!-- ============ 15. GLOSSAIRE ============ -->
+  <section id="glossaire">
+    <h2><span class="num">15</span> Glossaire des sigles</h2>
+    <dl class="gloss">
+      <dt>Ordonnateur</dt><dd>Celui qui décide et ordonne la dépense (côté collectivité). Ne manie pas l'argent.</dd>
+      <dt>Comptable public</dt><dd>Agent de la DGFiP qui contrôle et paie. Ne juge pas l'opportunité.</dd>
+      <dt>DGFiP</dt><dd>Direction Générale des Finances Publiques — l'administration qui a intégré l'ancien « Trésor public ».</dd>
+      <dt>SGC</dt><dd>Service de Gestion Comptable — l'interlocuteur local du comptable, successeur des trésoreries.</dd>
+      <dt>Engagement</dt><dd>Réservation des crédits (comptable) + acte créant l'obligation de payer (juridique).</dd>
+      <dt>Service fait</dt><dd>Constatation que la fourniture est livrée / la prestation réalisée. Condition du paiement.</dd>
+      <dt>Liquidation</dt><dd>Vérification du service fait + arrêt du montant exact à payer.</dd>
+      <dt>Mandat / mandatement</dt><dd>Ordre donné par l'ordonnateur au comptable de payer une dépense liquidée.</dd>
+      <dt>Titre de recette</dt><dd>Le miroir du mandat, côté recettes : ordre d'encaisser.</dd>
+      <dt>Crédits</dt><dd>Le « droit de dépenser » autorisé par le budget voté, par ligne.</dd>
+      <dt>M57</dt><dd>Nomenclature budgétaire et comptable, obligatoire pour toutes les collectivités depuis 2024.</dd>
+      <dt>AP / CP</dt><dd>Autorisation de Programme (enveloppe pluriannuelle) / Crédits de Paiement (par année).</dd>
+      <dt>BPU</dt><dd>Bordereau des Prix Unitaires — les prix contractuels du marché.</dd>
+      <dt>REP / écocontribution</dt><dd>Responsabilité Élargie du Producteur ; contribution à ajouter au HT avant TVA.</dd>
+      <dt>DGP</dt><dd>Délai Global de Paiement — 30 jours pour les collectivités.</dd>
+      <dt>PES V2</dt><dd>Protocole d'Échange Standard — flux dématérialisé collectivité → comptable.</dd>
+      <dt>Hélios</dt><dd>Logiciel du comptable public qui reçoit les flux de la collectivité.</dd>
+      <dt>SPIC</dt><dd>Service Public Industriel et Commercial — régime possible du service déchets (financé par redevance, budget annexe M4).</dd>
+      <dt>TEOM</dt><dd>Taxe d'Enlèvement des Ordures Ménagères — finance le service via le budget principal (M57).</dd>
+    </dl>
+  </section>
+
+  <footer>
+    Guide pédagogique · comptabilité publique territoriale · à jour juin 2026.<br>
+    Document de vulgarisation : en cas de doute, le service finances de la collectivité et le comptable public font foi.
+  </footer>
+
+</main>
+
+<script>
+  // Surlignage de la section active dans le menu
+  const liens = document.querySelectorAll('#nav a');
+  const sections = [...liens].map(a => document.querySelector(a.getAttribute('href')));
+  function maj(){
+    let i = sections.length;
+    while(--i >= 0 && sections[i] && window.scrollY + 120 < sections[i].offsetTop){}
+    liens.forEach(l => l.classList.remove('actif'));
+    if(i >= 0 && liens[i]) liens[i].classList.add('actif');
+  }
+  window.addEventListener('scroll', maj); maj();
+  // Fermer le menu mobile au clic
+  liens.forEach(l => l.addEventListener('click', () =>
+    document.querySelector('aside').classList.remove('open')));
+</script>
+</body>
+</html>
